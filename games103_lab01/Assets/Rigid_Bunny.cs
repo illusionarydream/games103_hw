@@ -30,6 +30,32 @@ public static class MatrixExtensions
 		result.w = a.w + b.w;
 		return result;
 	}
+
+	// cross Vector3 and Vector3
+	public static Vector3 Cross(this Vector3 a, Vector3 b)
+	{
+		Vector3 result = new Vector3();
+		result.x = a.y * b.z - a.z * b.y;
+		result.y = a.z * b.x - a.x * b.z;
+		result.z = a.x * b.y - a.y * b.x;
+		return result;
+	}
+
+	// dot Vector3 and Vector3^T
+	public static Matrix4x4 dot_T(this Vector3 a, Vector3 b)
+	{
+		Matrix4x4 result = new Matrix4x4();
+		result[0, 0] = a.x * b.x;
+		result[0, 1] = a.x * b.y;
+		result[0, 2] = a.x * b.z;
+		result[1, 0] = a.y * b.x;
+		result[1, 1] = a.y * b.y;
+		result[1, 2] = a.y * b.z;
+		result[2, 0] = a.z * b.x;
+		result[2, 1] = a.z * b.y;
+		result[2, 2] = a.z * b.z;
+		return result;
+	}
 }
 
 
@@ -48,6 +74,7 @@ public class Rigid_Bunny : MonoBehaviour
 
 	// initialize the ground status
 	public GameObject ground;
+	public GameObject wall;
 
 	// physical parameters
 	float gravity = 9.8f;                    // gravity
@@ -56,6 +83,7 @@ public class Rigid_Bunny : MonoBehaviour
 	float restitution = 0.5f;                   // for collision
 	float normal_decay = 0.5f;
 	float targent_decay = 0.5f;
+	float damping = 0.8f;                     // for angular velocity decay
 
 
 	// Use this for initialization
@@ -178,6 +206,7 @@ public class Rigid_Bunny : MonoBehaviour
 		{
 			return;
 		}
+
 		r_avg /= cnt;
 		v_avg /= cnt;
 
@@ -209,12 +238,13 @@ public class Rigid_Bunny : MonoBehaviour
 		if (Input.GetKey("r"))
 		{
 			transform.position = new Vector3(0, 2.0f, 0);
+			v = new Vector3(0, 0, 5);
 			restitution = 0.5f;
 			launched = false;
 		}
 		if (Input.GetKey("l"))
 		{
-			v = new Vector3(0, 0, 0);
+			v = new Vector3(0, 0, 5);
 			w = new Vector3(0, 0, 0);
 			launched = true;
 		}
@@ -224,12 +254,14 @@ public class Rigid_Bunny : MonoBehaviour
 
 		// Part II: Collision Impulse
 		Collision_Impulse(ground.transform.position, ground.transform.up);
+		Collision_Impulse(wall.transform.position, wall.transform.up);
 
 		// Part III: Update position & orientation
 		//Update linear status
-		Vector3 x = transform.position + v * dt;
+		Vector3 x = transform.position + damping * v * dt;
 		//Update angular status
-		Quaternion deltaRotation = new Quaternion(w.x * 0.5f * dt, w.y * 0.5f * dt, w.z * 0.5f * dt, 0);
+		float theta = damping * 0.5f * dt;
+		Quaternion deltaRotation = new Quaternion(w.x * theta, w.y * theta, w.z * theta, 0);
 		Quaternion q = MatrixExtensions.Add(transform.rotation, deltaRotation * transform.rotation).normalized;
 
 		// Part IV: Assign to the object
