@@ -1,0 +1,78 @@
+﻿// Example of a stackable shader layer, apply moss, or whatever you want, based
+// on the angle of the normal
+
+
+BEGIN_PROPERTIES
+	[BetterHeader(Moss)]
+   [Enum(UV,0,WorldSpace,1)] _MossTextureSpace ("UV Space", Float) = 0
+   _MossAlbedo("Moss Albedo", 2D) = "white" {}
+   [Normal][NoScaleOffset]_MossNormal("Moss Normal", 2D) = "bump" {}
+   [Toggle(_MOSSMASKMAP)] _UseMossMaskMap ("Use Mask Map", Float) = 0
+   [NoScaleOffset]_MossMask("Moss Mask Map", 2D) = "black" {}
+
+   [Space]
+   _MossAmount("Moss Amount", Range(0,1)) = 1
+   _MossAngleMin("Moss Angle Minimum", Range(0,1)) = 0.1
+   _MossHeight("Moss Height Filter", Range(0,1)) = 0
+   [Enum(Top,0,Bottom,1)] _MossInvertHeight ("Moss on", Float) = 0
+   _MossFalloff("Moss Contrast", Range(2, 30)) = 8
+
+END_PROPERTIES
+
+BEGIN_DEFINES
+	#pragma shader_feature_local _ _MOSSMASKMAP
+END_DEFINES
+
+BEGIN_CBUFFER
+    half _MossAmount;
+	half _MossFalloff;
+	half _MossAngleMin;
+	half _MossHeight;
+	half _MossInvertHeight;
+	float4 _MossAlbedo_ST;
+	half _MossTextureSpace;
+END_CBUFFER
+
+
+BEGIN_CODE
+
+	TEXTURE2D(_MossAlbedo);
+	SAMPLER(sampler_MossAlbedo);
+    TEXTURE2D(_MossNormal);
+	SAMPLER(sampler_MossNormal); // URP2020 has depth/normal pass, so must use own sampler
+    TEXTURE2D(_MossMask);
+	
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		half dt = dot(TangentToWorldSpace(d, o.Normal), float3(0,1,0));
+	    
+		dt -= _MossAngleMin;
+		dt = saturate(dt * _MossFalloff * _MossAmount);
+
+	    float hf = saturate((o.Height - _MossHeight) * _MossFalloff);
+	    if (_MossInvertHeight > 0.5)
+	       hf = 1.0 - hf;
+		dt *= hf;
+
+	    float2 uv = d.texcoord0.xy * _MossAlbedo_ST.xy + _MossAlbedo_ST.zw;
+	    if (_MossTextureSpace)
+        {
+    		uv = d.worldSpacePosition.xz * _MossAlbedo_ST.xy + _MossAlbedo_ST.zw;
+        }
+
+		half3 mossAlbedo = SAMPLE_TEXTURE2D(_MossAlbedo, sampler_MossAlbedo, uv).rgb;
+		half3 mossNormal = UnpackNormal(SAMPLE_TEXTURE2D(_MossNormal, sampler_MossNormal, uv)).rgb;
+
+		o.Albedo = lerp(o.Albedo, mossAlbedo, dt);
+		o.Normal = lerp(o.Normal, mossNormal, dt);
+
+		#if _MOSSMASKMAP
+			half4 mossMask = SAMPLE_TEXTURE2D(_MossMask, sampler_MossAlbedo, uv);
+			o.Smoothness = lerp(o.Smoothness, mossMask.a, dt);
+			o.Occlusion = lerp(o.Occlusion, mossMask.g, dt);
+		#endif
+
+		
+	}
+END_CODE
+

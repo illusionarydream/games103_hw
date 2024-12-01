@@ -1,0 +1,15 @@
+﻿
+BEGIN_OPTIONS
+   GrabPass { "_Grab" }
+   Alpha "Blend"
+   Workflow "Unlit"
+END_OPTIONS
+
+BEGIN_CODE
+    void SurfaceFunction(inout Surface o, ShaderData d)
+    {
+	    o.Albedo = 1 - GetSceneColor(d.screenUV);
+        o.Alpha = 1;
+    }
+END_CODE
+

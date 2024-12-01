@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: dd08c718ae20d47b38a10f833dfca957
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/JBooth.BetterShaders.Samples.asmdef
+  uploadId: 470645

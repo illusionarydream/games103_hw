@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d3672d627680c425aadfd944fa9e7d56
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 67d4904eef0dc43ab86c98a2532bae6e, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Stacked/TextureLayering.stackedshader
+  uploadId: 470645

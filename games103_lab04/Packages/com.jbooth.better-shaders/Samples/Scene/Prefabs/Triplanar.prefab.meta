@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8ab9ee075b3e6674099247d667144a0b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Prefabs/Triplanar.prefab
+  uploadId: 470645

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 463662652a6c546c6a1c65b80120a6bd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Materials/Stackable_FlatShading.mat
+  uploadId: 470645

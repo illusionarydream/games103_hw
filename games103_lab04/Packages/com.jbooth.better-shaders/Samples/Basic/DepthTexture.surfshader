@@ -1,0 +1,16 @@
+﻿BEGIN_OPTIONS
+   Workflow "Unlit"
+   Alpha "Blend"
+END_OPTIONS
+
+
+BEGIN_CODE
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		o.Albedo = fmod(GetLinearEyeDepth(d.screenUV), 1);
+		o.Alpha = 1;
+	}
+
+END_CODE
+

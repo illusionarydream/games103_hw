@@ -1,0 +1,138 @@
+﻿
+
+// Put any properties you have between the begin/end property blocks
+BEGIN_PROPERTIES
+   [BetterHeader(Puddles)]
+   [KeywordEnum(Constant, Texture, Vertex)] _PuddleSource ("Puddle Source", Float) = 0
+   [NoScaleOffset]_PuddleMask("Puddle Weight Map", 2D) = "white" {}
+   [Enum(R, 0, G, 1, B, 2, A, 3)] _PuddleChannel ("Weight Channel", Float) = 0
+
+   [Toggle(_GLOBALPUDDLES)]_UseGlobalPuddles("Use Global Puddles", Float) = 0
+   _PuddleAmount("Puddle Amount", Range(0,1)) = 0
+   _PuddleFalloff("Puddle Contrast", Range(2, 50)) = 12
+   _PuddleColor("Puddle Color", Color) = (0.2, 0.2, 0.2, 1)
+END_PROPERTIES
+
+
+BEGIN_DEFINES
+   #pragma shader_feature_local _ _GLOBALPUDDLES
+   #pragma shader_feature_local _ _PUDDLESOURCE_TEXTURE _PUDDLESOURCE_VERTEX
+END_DEFINES
+
+
+BEGIN_CBUFFER
+	half  _PuddleAmount;
+   half  _PuddleFalloff;
+   half  _PuddleChannel;
+   half  _PuddleSource;
+   half4 _PuddleColor;
+END_CBUFFER
+
+BEGIN_SUBSHADERS
+"StackableLibrary.surfshader"
+END_SUBSHADERS
+
+// All code goes here
+BEGIN_CODE
+
+   TEXTURE2D(_PuddleMask);
+   SAMPLER(sampler_PuddleMask);
+   half2 _Global_PuddleParams;   // this is a global, so keep it out of the cbuffer
+
+
+// I don't know why you'd want to stack puddles, but include guards just in case
+#ifndef __STACKABLE_WIND_INCLUDES__
+#define __STACKABLE_WIND_INCLUDES__
+
+   half4 GetPuddleMask(float2 uv, half4 vertexColor)
+   {
+      #if _PUDDLESOURCE_TEXTURE
+         return SAMPLE_TEXTURE2D(_PuddleMask, sampler_PuddleMask, uv);
+      #elif _PUDDLESOURCE_VERTEX
+         return vertexColor;
+      #else
+         return float4(1,1,1,1);
+      #endif
+   }
+
+   half4 GetPuddleMaskLOD(float2 uv, half4 vertexColor)
+   {
+      #if _PUDDLESOURCE_TEXTURE
+         return SAMPLE_TEXTURE2D_LOD(_PuddleMask, sampler_PuddleMask, uv, 0);
+      #elif _PUDDLESOURCE_VERTEX
+         return vertexColor;
+      #else
+         return half4(1,1,1,1);
+      #endif
+   }
+
+
+
+
+   void GetPuddleParams(inout float puddleMask, inout float pudHeight, half4 mask)
+   {
+      #if _PUDDLESOURCE_TEXTURE || _PUDDLESOURCE_VERTEX
+         if (_PuddleChannel < 0.5)
+            puddleMask = mask.r;
+         else if (_PuddleChannel < 1.5)
+            puddleMask = mask.g;
+         else if (_PuddleChannel < 2.5)
+            puddleMask = mask.b;
+         else
+            puddleMask = mask.a;
+      #endif
+
+      pudHeight = _PuddleAmount;
+      #if _GLOBALPUDDLES
+         pudHeight = _Global_PuddleParams;
+      #endif
+   }
+#endif
+   
+   void ModifyTessellatedVertex(inout VertexData v, inout ExtraV2F d)
+   {
+      #if _HAS_LIT_TESSELLATION && PUDDLE_ON
+         half mask = 1;
+         half pudHeight = 1;
+         GetPuddleParams(mask, pudHeight, GetPuddleMaskLOD(v.texcoord0.xy, v.vertexColor));
+         float minOffset = pudHeight * _DisplacementAmount;
+         if (d.blackboard.vertexHeightOffset < minOffset)
+         {
+            v.vertex.xyz = d.blackboard.originalVertexPosition + v.normal * minOffset;
+            d.blackboard.vertexHeightOffset = minOffset;
+        }
+      #endif
+   }
+   
+
+   void SurfaceFunction(inout Surface o, ShaderData d)
+   {
+      half mask = 1;
+      half pudHeight = 1;
+      GetPuddleParams(mask, pudHeight, GetPuddleMask(d.texcoord0.xy, d.vertexColor));
+
+      half depth = pudHeight - o.Height;
+      half depthMask = saturate(depth * _PuddleFalloff);
+      depthMask *= _PuddleColor.a;
+      depth = o.Height - pudHeight;
+
+      depth *= mask;
+      depthMask *= mask;
+
+      // extend wetness slighting higher than the puddle
+      half wetmask = saturate((pudHeight + 0.05 - o.Height) * _PuddleFalloff);
+      WaterBRDF(o.Albedo, o.Smoothness, o.Metallic, wetmask, 0.5);
+
+      o.Emission *= 1 + depth;
+      o.Metallic *= 1 + depth;
+      o.Specular *= 1 + depth;
+
+      o.Normal = lerp(o.Normal, float3(0,0,1), depthMask);
+      o.Occlusion = lerp(o.Occlusion, 1, depthMask);
+
+      o.Albedo = lerp(o.Albedo, _PuddleColor.rgb, depthMask);
+
+   }
+
+END_CODE
+

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7ea300552186542ac98d900c4c301271
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/BetterShaders_chains.txt
+  uploadId: 470645

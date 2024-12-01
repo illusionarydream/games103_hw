@@ -1,0 +1,33 @@
+﻿
+BEGIN_PROPERTIES
+	_Color ("Main Color", Color) = (0, 1, 0, 1)
+	_Specular("Specular", Color) = (0, 0, 0, 0)
+	_Smoothness("Smoothness", Range(0,1)) = 0
+	_SpecularPower("Specular Power", Range(0.01, 2)) = 1
+END_PROPERTIES
+
+BEGIN_CBUFFER
+	half4 _Color;
+    half3 _Specular;
+    half _Smoothness;
+	half _SpecularPower;
+END_CBUFFER
+
+
+BEGIN_DEFINES
+	#define _SIMPLELIT 1	// compile as SimpleLit shader in URP, or as BlinPhong in standard
+END_DEFINES
+
+BEGIN_CODE
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		o.Albedo = _Color.rgb;
+		o.Alpha = _Color.a;
+        o.Specular = _Specular;
+		o.Smoothness = _Smoothness;
+		o.SpecularPower = _SpecularPower;
+    }
+
+END_CODE
+

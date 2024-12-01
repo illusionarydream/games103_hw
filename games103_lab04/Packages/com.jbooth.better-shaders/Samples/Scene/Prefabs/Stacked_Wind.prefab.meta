@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 32e57fdaefb304248ae3d0100aa38bf7
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Prefabs/Stacked_Wind.prefab
+  uploadId: 470645

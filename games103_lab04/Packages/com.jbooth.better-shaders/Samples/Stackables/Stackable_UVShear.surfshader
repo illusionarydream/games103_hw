@@ -1,0 +1,45 @@
+﻿// Wind Particulate effect
+
+
+// Put any properties you have between the begin/end property blocks
+BEGIN_PROPERTIES
+   [BetterHeader(UV Shear)]
+   [Enum(Vertex, 0, Surface, 1)] _ShearStage("Apply in Stage", Float) = 0
+   [Vec2Split(Center,Offset)]_ShearCenterOffset("Center and Offset", Vector) = (0.5, 0.5, 0, 0)
+   _ShearStrength("Strength", Float) = 1
+END_PROPERTIES
+
+BEGIN_SUBSHADERS
+"StackableLibrary.surfshader"
+END_SUBSHADERS
+
+
+// Any variables you want to have in the per material CBuffer go here.
+BEGIN_CBUFFER
+   half4 _ShearCenterOffset;
+   half _ShearStrength;
+   half _ShearStage;
+END_CBUFFER
+
+// All code goes here
+BEGIN_CODE
+
+   void ModifyVertex(inout VertexData v, inout ExtraV2F d)
+   {
+      if (_ShearStage < 0.5)
+      {
+         v.texcoord0.xy = RadialShearUV(v.texcoord0.xy, _ShearCenterOffset.xy, _ShearStrength, _ShearCenterOffset.zw);
+      }
+   }
+
+
+   void SurfaceFunction(inout Surface o, inout ShaderData d)
+   {
+      if (_ShearStage > 0.5)
+      {
+         d.texcoord0.xy = RadialShearUV(d.texcoord0.xy, _ShearCenterOffset.xy, _ShearStrength, _ShearCenterOffset.zw);
+      }
+   }
+
+END_CODE
+

@@ -1,0 +1,108 @@
+﻿// Stackable Wetness feature, which can be masked by texture, vertex, or constant across the surfae.
+//
+// This shader does show off one very minor non-optimization. When the compiler strips the various
+// shader structures, it just looks for the use of each attribute in the code. This shader uses
+// the vertexColor attribute, so that will be copied through all stages. However, we only use that
+// attribute when we're using the vertex colors as the mask, so it is not actually needed in every
+// variant of the shader. Unity's original surface shader system did not have this issue- it would
+// generate every variant and perform stripping on them individually, which back in the Unity 3 day
+// might actually make a difference on the mobile phones of the time. These days, it's unlikely
+// to be noticable even on a low end phone. The downside of this, besides a lot of complexity?
+// if you add too many shader_features to a surface shader, they get exponentially slower and more
+// memory intensity to compile. A shader with 10-20 shader features would completely stall unity,
+// causing it to crash after about 10 minutes of string operations. So yeah, not worth it. 
+
+BEGIN_OPTIONS
+   ShaderName "BetterShaders/StackableWetness"
+END_OPTIONS
+
+// Put any properties you have between the begin/end property blocks
+BEGIN_PROPERTIES
+   [BetterHeader(Wetness)]
+   [KeywordEnum(Constant, Texture, Vertex)] _WetnessSource ("Mask Source", Float) = 0
+   _WetnessMask("Wetness Mask", 2D) = "white" {}
+   [Enum(R, 0, G, 1, B, 2, A, 3)] _WetnessChannel ("Mask Channel", Float) = 0
+
+   [Toggle(_GLOBALWETNESS)]_UseGlobalWetness("Use Global Wetness", Float) = 0
+   _WetnessAmount("Wetness Amount", Range(0,1)) = 0
+   _Porosity("Porosity", Range(1,0)) = 0.4
+	_WetnessMin("Minimum Wetness", Range(0,1)) = 0
+   _WetnessMax("Maximum Wetness", Range(0,1)) = 1
+   _WetnessFalloff("Angle Falloff", Range(0,1)) = 1
+   _WetnessAngleMin("Wetness Minimum Angle", Range(-1,1)) = -1
+END_PROPERTIES
+
+
+BEGIN_DEFINES
+   #pragma shader_feature_local _ _GLOBALWETNESS
+   #pragma shader_feature_local _ _WETNESSSOURCE_TEXTURE _WETNESSSOURCE_VERTEX
+END_DEFINES
+
+// Any variables you want to have in the per material CBuffer go here.
+BEGIN_CBUFFER
+	half _WetnessAmount;
+   half _Porosity;
+   half _WetnessMin;
+   half _WetnessMax;
+   half _UseGlobalWetness;
+   half _WetnessFalloff;
+   half _WetnessAngleMin;
+   half _WetnessChannel;
+   half _WetnessSource;
+END_CBUFFER
+
+BEGIN_SUBSHADERS
+"StackableLibrary.surfshader"
+END_SUBSHADERS
+
+
+// All code goes here
+BEGIN_CODE
+
+   TEXTURE2D(_WetnessMask);
+   SAMPLER(sampler_WetnessMask);
+   half2 _Global_WetnessParams; // global, not in cbuffer
+
+   void DoWetness(inout Surface o, ShaderData d, float wetnessMask)
+   {
+      float wetLevel = clamp(_WetnessAmount, _WetnessMin, _WetnessMax);
+
+      #if _GLOBALWETNESS
+         wetLevel = clamp(wetLevel, _Global_WetnessParams.x, _Global_WetnessParams.y);
+      #endif
+
+      float dt = dot(TangentToWorldSpace(d, o.Normal), float3(0,1,0));
+      dt -= _WetnessAngleMin;
+      dt = saturate(dt * _WetnessFalloff * wetLevel);
+      dt *= wetnessMask;
+
+      WaterBRDF(o.Albedo, o.Smoothness, o.Metallic, dt, _Porosity);
+   }
+
+
+   void SurfaceFunction(inout Surface o, ShaderData d)
+   {
+      float wetnessMask = 1;
+
+      #if _WETNESSSOURCE_TEXTURE
+         half4 mask = SAMPLE_TEXTURE2D(_WetnessMask, sampler_WetnessMask, d.texcoord0.xy);
+      #elif _WETNESSSOURCE_VERTEX
+         half4 mask = d.vertexColor;
+      #endif
+
+      #if _WETNESSSOURCE_TEXTURE || _WETNESSSOURCE_VERTEX
+         if (_WetnessChannel < 0.5)
+            wetnessMask = mask.r;
+         else if (_WetnessChannel < 1.5)
+            wetnessMask = mask.g;
+         else if (_WetnessChannel < 2.5)
+            wetnessMask = mask.b;
+         else
+            wetnessMask = mask.a;
+      #endif
+
+      DoWetness(o, d, wetnessMask);
+   }
+
+END_CODE
+

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0cb4a30d1e6344fe48acf94426987c5c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Materials/ScreenUV.mat
+  uploadId: 470645

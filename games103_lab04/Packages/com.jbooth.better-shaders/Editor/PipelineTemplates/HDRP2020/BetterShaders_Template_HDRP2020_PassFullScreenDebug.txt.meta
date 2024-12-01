@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ef1b5c5309efa46168926587c428b9f5
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/HDRP2020/BetterShaders_Template_HDRP2020_PassFullScreenDebug.txt
+  uploadId: 470645

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 759843b845a3d4419b5f6abce26b8087
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Concrete_Edge.mat
+  uploadId: 470645

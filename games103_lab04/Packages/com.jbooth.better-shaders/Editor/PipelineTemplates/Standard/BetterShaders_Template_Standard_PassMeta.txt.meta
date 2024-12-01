@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 45028f7ab37b143a9af66ef91af65ef7
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/Standard/BetterShaders_Template_Standard_PassMeta.txt
+  uploadId: 470645

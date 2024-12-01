@@ -1,0 +1,23 @@
+﻿// Example of a stackable shader layer, apply emissive rim lighting
+
+
+BEGIN_PROPERTIES
+	[BetterHeader(Rim Lighting)]
+	_RimLightColor("Rim Light Color", Color) = (1,1,1,1)
+	_RimLightPower("Rim Light Power", Range(0.5, 12)) = 4
+END_PROPERTIES
+
+BEGIN_CBUFFER
+	half3 _RimLightColor;
+	half  _RimLightPower;
+END_CBUFFER
+
+
+BEGIN_CODE
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+	    float rim = 1.0 - saturate(dot(d.tangentSpaceViewDir, o.Normal)); 
+	    o.Emission += pow(rim, _RimLightPower) * _RimLightColor;
+	}
+END_CODE
+

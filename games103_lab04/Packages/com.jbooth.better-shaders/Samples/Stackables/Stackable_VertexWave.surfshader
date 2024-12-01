@@ -1,0 +1,39 @@
+﻿// Example of a stackable shader which apply's vertex animation
+
+
+BEGIN_PROPERTIES
+   [BetterHeader(Vertex Wave)]
+   _VertexWaveFrequency("Wave Frequency", Range(0,10)) = 2
+   _VertexWaveAmplitude("Wave Amplitude", Range(0,10)) = 0.3
+   _VertexWaveHeightScale("Wave Height Scale", Range(1, 30)) = 9
+END_PROPERTIES
+
+
+BEGIN_CBUFFER
+	half _VertexWaveFrequency;
+	half _VertexWaveAmplitude;
+	half _VertexWaveHeightScale;
+END_CBUFFER
+
+
+BEGIN_CODE
+
+	void ModifyVertex(inout VertexData v, inout ExtraV2F d)
+	{
+		// only do it in this stage if we're not tessellated, otherwise lets
+		// do it in the tessellated stage for better resolution
+
+		#if !_TESSELLATION_ON
+		   v.vertex.x += sin((_Time.y + v.vertex.y * _VertexWaveHeightScale) * _VertexWaveFrequency) * _VertexWaveAmplitude;
+		#endif
+	}
+
+	void ModifyTessellatedVertex(inout VertexData v, inout ExtraV2F d)
+    {
+        #if _TESSELLATION_ON
+    		v.vertex.x += sin((_Time.y + v.vertex.y * _VertexWaveHeightScale) * _VertexWaveFrequency) * _VertexWaveAmplitude;
+    	#endif
+    }
+
+END_CODE
+

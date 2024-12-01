@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 34ae16c55c6bb5c499850a48a9da2858
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Prefab/FS_Aisle_01.prefab
+  uploadId: 470645

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4e7a13ca0b390441a9efc5b2604fd2cf
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/URP2020/BetterShaders_Template_URP2020_include.txt
+  uploadId: 470645

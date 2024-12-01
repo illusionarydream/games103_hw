@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 573008edd81fd004a85a9b75a149b49f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Prefab/SR_SectionCeiling_01.prefab
+  uploadId: 470645

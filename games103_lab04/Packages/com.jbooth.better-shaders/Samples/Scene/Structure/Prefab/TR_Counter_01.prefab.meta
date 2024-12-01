@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5f7cc295896e7b24cb6789747b49090a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Prefab/TR_Counter_01.prefab
+  uploadId: 470645

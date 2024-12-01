@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7fd799e17639de145a0ab527f0314009
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Prefabs/SampleEnvironment.prefab
+  uploadId: 470645

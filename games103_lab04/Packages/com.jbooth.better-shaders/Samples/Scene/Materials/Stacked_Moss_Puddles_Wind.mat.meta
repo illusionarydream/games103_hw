@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6c257a8ac82c5409bbb232f771c090e5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Materials/Stacked_Moss_Puddles_Wind.mat
+  uploadId: 470645

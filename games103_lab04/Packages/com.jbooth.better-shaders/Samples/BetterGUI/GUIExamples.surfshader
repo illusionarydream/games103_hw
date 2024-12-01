@@ -1,0 +1,52 @@
+﻿// this just shows off property drawers
+
+
+// Put any properties you have between the begin/end property blocks
+BEGIN_PROPERTIES
+
+   // Create a Header
+   [Message(This section shows off various ways to show and hide properties based on other properties based on rollouts or folders)]
+   [BetterHeader(Headers and Grouping)]
+   
+   // Create a clickable rollout. Any property which is under this needs [Group(String)] tags
+   [GroupRollout(Group Rollout)]
+
+   [Group(Group Rollout)] _AlbedoMap("Albedo/Height", 2D) = "white" {}
+	[Group(Group Rollout)]  _Tint ("Tint", Color) = (1, 1, 1, 1)
+
+   // create a foldout. Any property which is under this needs [Group(String)] tags
+   [GroupFoldout(Group Foldout)]
+   [Group(Group Foldout)] [Normal][NoScaleOffset]_NormalMap("Normal", 2D) = "bump" {}
+   [Group(Group Foldout)] _NormalStrength("Normal Strength", Range(0,2)) = 1
+
+
+   [Message(Toggle a keyword and use showif to hide properties)]
+   [BetterHeaderToggleKeyword(SomeKeyword)] _SomeKeyword("Better Header Toggle Keyword", Float) = 1
+   
+   [ShowIf(_SomeKeyword)] [NoScaleOffset]_MaskMap("", 2D) = "black" {}
+
+   [Message(This is a header with a property toggle on it.)]
+   [BetterHeaderToggle] _SomeFloat("Better Header Toggle", Float) = 1
+   [ShowIf(_SomeFloat)] [NoScaleOffset]_MaskMap2("", 2D) = "black" {}
+   
+
+   // create a bool that sets a keyword
+   [Toggle(_MASKMAP)] _UseMaskMap ("Set Keyword", Float) = 0
+   // Only show this bool if _UseMaskMap > 1
+   [ShowIf(_UseMaskMap)] [NoScaleOffset]_MaskMap3("Show if Set Keyword control is true", 2D) = "black" {}
+
+
+   [Message(This section shows off various properties)]
+   [BetterHeader(Property Drawers)]
+   
+   [Range01]_VectorRange("[Range01] Range control", Vector) = (0.3, 0.9, 0, 0)
+   [Vec2]_Vector2Draw("[Vec2] XY", Vector) = (0,0,0,0)
+   [Vec2Split(First, Second)] _Vector2Split("", Vector) = (0,0,0,0) 
+
+   
+
+
+
+END_PROPERTIES
+
+

@@ -1,0 +1,70 @@
+﻿
+// A library for common functions, use include guards!
+
+BEGIN_CODE
+
+#ifndef __STACKABLE_INCLUDES__
+#define __STACKABLE_INCLUDES__
+
+   half FilterRange(float4 range, float y)
+   {
+      half w = saturate((y - range.x) / max(range.y - range.x, 0.0001));
+      w *= 1.0 - saturate((y - range.z) / max(range.w - range.z, 0.0001));
+      return w;
+   }
+
+   
+   float2 RotateUV(float2 uv, float amt)
+   {
+      uv -=0.5;
+      float s = sin ( amt);
+      float c = cos ( amt );
+      float2x2 mtx = float2x2( c, -s, s, c);
+      mtx *= 0.5;
+      mtx += 0.5;
+      mtx = mtx * 2-1;
+      uv = mul ( uv, mtx );
+      uv += 0.5;
+      return uv;
+   }
+
+   float2 RadialShearUV(float2 uv, float2 center, float2 strength, float2 offset)
+   {
+      float2 delta = uv - center;
+      float delta2 = dot(delta.xy, delta.xy);
+      float2 delta_offset = delta2 * strength;
+      return uv + float2(delta.y, -delta.x) * delta_offset + offset;
+   }
+
+   void WaterBRDF (inout half3 albedo, inout half smoothness, half metallic, half wetFactor, half surfPorosity) 
+   {
+      half porosity = saturate((( (1 - smoothness) - 0.5)) / max(surfPorosity, 0.001));
+      half factor = lerp(1, 0.2, (1 - metallic) * porosity);
+      albedo *= lerp(1.0, factor, wetFactor);
+      smoothness = lerp(smoothness, 0.92f, wetFactor);
+   }
+
+
+   half FilterWindParticulateSlope(float4 range, float3 worldNormalVertex, float windRot)
+   {
+      float2 windDir = RotateUV(float2(1, 0), windRot);
+      float2 flow = lerp(worldNormalVertex.xz, normalize(worldNormalVertex.xz), max(0.1, worldNormalVertex.z));
+      float cofacing = dot(windDir, flow); // 1 going downhill, -1 going uphill
+      return FilterRange(range, cofacing);
+   }
+
+   fixed ProcessWindParticulateMask(inout fixed mask, float contrast)
+   {
+      mask = pow(abs(mask), abs(contrast));
+      fixed invMask = 1.0 - mask;
+      invMask *= invMask; 
+      invMask *= invMask;
+      return invMask;
+   }
+
+#endif
+
+END_CODE
+
+
+

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 2e9e79cc908e143dd82b44447dd6ef75
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/HDRP2020/BetterShaders_Template_HDRP2020_PassTransparentDepthPrepass.txt
+  uploadId: 470645

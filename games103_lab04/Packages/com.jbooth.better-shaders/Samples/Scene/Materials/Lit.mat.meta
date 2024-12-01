@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bfc9dc6d3c6254d1ab6614129e897dda
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Materials/Lit.mat
+  uploadId: 470645

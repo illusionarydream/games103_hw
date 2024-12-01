@@ -1,0 +1,75 @@
+﻿// This example shows a few tricks:
+//    - To add tessellation, we just inherit the Lit shader and add the tessellation code
+//    - Data is added to the blackboard so that other stackables in the same shader stage can read it.
+//      Anything in the blackboard only survives that stage (ie: Does not get passed from vertex->domain->pixel
+//      To make this safe, you can put a define in this shader that stackables can check before accessing
+//      blackboard data
+//
+
+BEGIN_OPTIONS
+   Tessellation "Edge"
+END_OPTIONS
+
+BEGIN_SUBSHADERS
+   "Lit.surfshader"
+END_SUBSHADERS
+
+// Put any properties you have between the begin/end property blocks
+BEGIN_PROPERTIES
+   [BetterHeader(Lit Tessellation)]
+   _DisplacementAmount("Displacement Amount", Range(0,2)) = 0.5
+   _DisplacementMipLod("Mip Level", Range(0,5)) = 1
+   _TessEdgeLength("Edge Length", Range(10, 1000)) = 20
+   _TessSubDiv("Max Subdiv", Range(2, 24)) = 12
+END_PROPERTIES
+
+
+// Any variables you want to have in the per material CBuffer go here.
+BEGIN_CBUFFER
+   half _DisplacementAmount;
+   half _TessEdgeLength;
+   half _TessSubDiv;
+   half _DisplacementMipLod;
+END_CBUFFER
+
+
+// let subshaders know that we are in the stack so they can read the blackboard data
+BEGIN_DEFINES
+   #define _HAS_LIT_TESSELLATION 1
+END_DEFINES
+
+// we want this data in later stages, so they can understand where the vertex originally was,
+// and how we moved it. Note that the blackboard in the vertex stages is in the ExtraV2F structure,
+// but is not passed to the pixel shader
+BEGIN_BLACKBOARD
+   float3 originalVertexPosition;
+   float vertexHeightOffset;
+END_BLACKBOARD
+
+BEGIN_CODE
+
+   void ModifyTessellatedVertex(inout VertexData v, inout ExtraV2F d)
+   {
+      // save some for later augustus
+      // we store out information about what we did here for stackables. 
+      d.blackboard.originalVertexPosition = v.vertex.xyz;
+
+
+      float2 uv = v.texcoord0.xy * _AlbedoMap_ST.xy + _AlbedoMap_ST.zw;
+      float height = SAMPLE_TEXTURE2D_LOD(_AlbedoMap, sampler_AlbedoMap, uv, _DisplacementMipLod).a * _DisplacementAmount;
+      v.vertex.xyz = v.vertex.xyz + v.normal * height;
+
+      d.blackboard.vertexHeightOffset = height;
+
+   }
+
+   // (optional) if you are using tessellation and displacement, you can return
+   // the tessellation distance and subdivision here
+   float3 GetTessFactors ()
+   {
+      return float3(_TessEdgeLength, _TessSubDiv, 0);
+   }
+
+
+END_CODE
+

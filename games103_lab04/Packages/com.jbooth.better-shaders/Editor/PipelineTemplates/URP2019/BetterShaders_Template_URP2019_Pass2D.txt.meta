@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4b34fc3a4da7b4437be58988a24b47f7
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/URP2019/BetterShaders_Template_URP2019_Pass2D.txt
+  uploadId: 470645

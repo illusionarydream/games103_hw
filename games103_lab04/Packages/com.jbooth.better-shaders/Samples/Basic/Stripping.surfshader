@@ -1,0 +1,45 @@
+﻿// normally, anything we use is taken across the vertex to pixel pathway. However,
+// that can be wasteful if we only use the data in the vertex shader, and not in
+// the pixel shader. So we can tell it to strip certain information from the
+// vertex to pixel structure, so it doesn't get copied to the pixel shader.
+//
+// If you look at the compiled code from this example, you will see that
+// the VertexToPixel structure does not have vertexColor or texcoord2 in it,
+// but the VertexData structure does.
+//
+// Additionally, sometimes we only want data when certain defines are set.
+// 
+
+
+BEGIN_OPTIONS
+   StripV2F { vertexColor texcoord2 }
+   ExtraV2F1Require "defined(_DOTHETHINGJULEE)"
+END_OPTIONS
+
+BEGIN_DEFINES
+   #pragma shader_feature_local _ _DOTHETHINGJULEE
+END_DEFINES
+
+BEGIN_CODE
+
+	void ModifyVertex(inout VertexData v, inout ExtraV2F e)
+	{
+		// we used vertex color, but they won't be interpolated to the pixel shader. 
+		e.extraV2F0 = v.vertexColor + v.texcoord2;	
+
+		// we only want to use this interpolator when this define is set, so it's marked in the options block
+		#if defined(_DOTHETHINGJULEE)
+		   e.extraV2F1 = v.vertexColor * 0.5;
+		#endif
+	}
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		o.Albedo = d.extraV2F0.rgb;
+	    #if defined(_DOTHETHINGJULEE)
+			o.Emission = d.extraV2F1.rgb;
+	    #endif
+	}
+
+END_CODE
+

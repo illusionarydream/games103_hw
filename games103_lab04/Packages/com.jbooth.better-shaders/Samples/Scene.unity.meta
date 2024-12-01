@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1a43f86ca5c744f35b187f7237321bf6
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene.unity
+  uploadId: 470645

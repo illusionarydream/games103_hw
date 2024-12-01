@@ -1,0 +1,27 @@
+﻿// suck in the lit shader and make it specular..
+
+BEGIN_SUBSHADERS
+   "Lit.surfshader"
+END_SUBSHADERS
+
+BEGIN_OPTIONS
+   Workflow "Specular"
+END_OPTIONS
+
+BEGIN_PROPERTIES
+   [NoScaleOffset]_Specular("Specular", 2D) = "white" {}
+END_PROPERTIES
+
+
+BEGIN_CODE
+
+   TEXTURE2D(_Specular);
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+      o.Metallic = 0;
+      o.Specular = SAMPLE_TEXTURE2D(_Specular, sampler_AlbedoMap, d.texcoord0.xy * _AlbedoMap_ST.xy + _AlbedoMap_ST.zw).rgb;
+	}
+
+END_CODE
+

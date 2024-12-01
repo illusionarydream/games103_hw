@@ -1,0 +1,20 @@
+﻿// a simple final color example
+
+// All code goes here
+BEGIN_CODE
+
+   void FinalColorForward(inout Surface o, inout ShaderData d, inout half4 color)
+   {
+      color.rgb = 1 - color.rgb;
+   }
+
+
+   void FinalGBufferStandard(inout Surface o, inout ShaderData d, inout half4 GBuffer0, inout half4 GBuffer1, 
+                             inout half4 GBuffer2, inout half4 outEmission, inout half4 outShadowMask)
+   {
+      GBuffer0.xyz = 1 - GBuffer0.xyz;
+   }
+
+
+END_CODE
+

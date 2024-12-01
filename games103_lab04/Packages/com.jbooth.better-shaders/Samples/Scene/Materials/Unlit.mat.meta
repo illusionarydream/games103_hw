@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7c2326e32394b4edfad20565585d6034
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Materials/Unlit.mat
+  uploadId: 470645

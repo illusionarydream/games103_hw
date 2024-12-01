@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c3d24cb5f290d764386c28bdda58bf5a
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Prefabs/Lit.prefab
+  uploadId: 470645

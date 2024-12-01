@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 653499412997e4e57a6c3912a35e780b
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/URP2020/BetterShaders_Template_URP2020_PassShadow.txt
+  uploadId: 470645

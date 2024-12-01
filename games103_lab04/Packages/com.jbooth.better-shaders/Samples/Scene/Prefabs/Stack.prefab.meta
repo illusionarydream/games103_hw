@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0e0f74901b8b4b443ad0a0b349f5ca9f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Prefabs/Stack.prefab
+  uploadId: 470645

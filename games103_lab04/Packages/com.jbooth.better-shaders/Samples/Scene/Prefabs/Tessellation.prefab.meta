@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ca80e2030aa54694385904b0a7b6c43b
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Prefabs/Tessellation.prefab
+  uploadId: 470645

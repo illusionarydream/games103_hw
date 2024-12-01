@@ -1,0 +1,19 @@
+﻿
+BEGIN_OPTIONS
+   Queue "Transparent"
+   Alpha "Blend"
+END_OPTIONS
+
+BEGIN_SUBSHADERS
+"Lit.surfshader"
+END_SUBSHADERS
+
+
+BEGIN_CODE
+   void SurfaceFunction(inout Surface o, ShaderData d)
+   {
+      // lit shader expects height in color.a, so we just remap it here
+      o.Alpha = o.Height;
+   }
+END_CODE
+

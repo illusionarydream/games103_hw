@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aa6b70e207caf4024a07cdbf7051726f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Concrete_Grey.mat
+  uploadId: 470645

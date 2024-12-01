@@ -1,0 +1,17 @@
+{
+    "name": "Samples",
+    "references": [
+        "GUID:a0792b212a555914396dda56372bbfdf"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

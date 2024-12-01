@@ -1,0 +1,19 @@
+﻿// want to modify the depth buffer output? Just write to o.outputDepth,
+// and the shader will be compiled with SV_Depth semantics enabled
+
+BEGIN_PROPERTIES
+	_Albedo("Albedo/Height", 2D) = "white" {}
+END_PROPERTIES
+
+BEGIN_CODE
+
+	sampler2D _Albedo;
+	void SurfaceFunction(inout Surface o, inout ShaderData d)
+	{
+		half4 c = tex2D(_Albedo, d.texcoord0.xy);
+		o.Albedo = c.rgb;
+		o.outputDepth = d.clipPos.z - (0.02/d.clipPos.w) * (c.a/d.clipPos.w);
+	}
+
+END_CODE
+

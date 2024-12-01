@@ -1,0 +1,23 @@
+﻿
+BEGIN_PROPERTIES
+	_Color ("Main Color", Color) = (0, 1, 0, 1)
+END_PROPERTIES
+
+BEGIN_CBUFFER
+	half4 _Color;
+END_CBUFFER
+
+BEGIN_PASS("All")	// could be forward, gbuffer, forwardadd, shadow, select, depth, meta - can have multiple blocks
+   Cull Front
+END_PASS
+
+BEGIN_CODE
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		o.Albedo = _Color.rgb;
+		o.Alpha = _Color.a;
+	}
+
+END_CODE
+

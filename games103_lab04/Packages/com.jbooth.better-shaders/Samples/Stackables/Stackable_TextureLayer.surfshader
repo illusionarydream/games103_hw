@@ -1,0 +1,168 @@
+﻿// An example of the stadard/lit shader style of mega shader
+
+
+BEGIN_OPTIONS 
+    CustomEditor "JBooth.BetterShaders.BetterShaderMaterialGUI"
+    SubEditor "TextureLayerMaterialEditor"
+END_OPTIONS 
+
+// This shader uses a custom editor, rather than MaterialPropertyDrawers..
+BEGIN_PROPERTIES
+   _LayerTextureSpace ("UV Space", Float) = 0
+   _LayerAlbedoMap("Albedo/Height", 2D) = "white" {}
+   _LayerTint ("Tint", Color) = (1, 1, 1, 1)
+   _LayerNormalMap("Normal", 2D) = "bump" {}
+   _LayerNormalStrength("Normal Strength", Range(0,2)) = 1
+   _LayerMaskMap("Mask Map", 2D) = "black" {}
+   _LayerBlendMode("Blend Mode", Float) = 1
+   _LayerStrength("Layer Strength", Range(0,1)) = 1
+   _LayerBlendContrast("Blend Contrast", Range(0.001, 0.9999)) = 0.7
+   _LayerAngleMin("Angle Minimum", Range(-1,1)) = 0.0
+   _LayerHeight("Height Filter", Range(0,1)) = 0
+   _LayerInvertHeight ("Texture on", Float) = 0
+   _LayerWeightMap("Weight Mask", 2D) = "white" {}
+   _LayerChannel ("Weight Channel", Float) = 0
+END_PROPERTIES
+
+
+// Any variables you want to have in the per material CBuffer go here.
+BEGIN_CBUFFER
+   half4 _LayerTint;
+   float4 _LayerAlbedoMap_ST;
+   half _LayerNormalStrength;
+   half _LayerBlendMode;
+   half _LayerStrength;
+   half _LayerBlendContrast;
+   half _LayerAngleMin;
+   half _LayerHeight;
+   half _LayerInvertHeight;
+   half _LayerChannel;
+   half _LayerTextureSpace;
+END_CBUFFER
+
+
+
+BEGIN_DEFINES
+   #pragma shader_feature_local _ _LAYERMASKMAP
+   #pragma shader_feature_local _ _LAYERSOURCE_TEXTURE _LAYERSOURCE_VERTEX
+END_DEFINES
+
+
+// All code goes here
+
+BEGIN_CODE
+
+   TEXTURE2D(_LayerAlbedoMap);
+   SAMPLER(sampler_LayerAlbedoMap);   // naming this way associates it with the sampler properties from the albedo map
+   TEXTURE2D(_LayerNormalMap);
+   SAMPLER(sampler_LayerNormalMap);
+   TEXTURE2D(_LayerMaskMap);
+
+   TEXTURE2D(_LayerWeightMap);
+
+
+#ifndef __STACKABLE_TEXTURELAYER_INCLUDES__
+#define __STACKABLE_TEXTURELAYER_INCLUDES__
+
+   half4 GetWeightMask(float2 uv, half4 vertexColor)
+   {
+      #if _LAYERSOURCE_TEXTURE
+         return SAMPLE_TEXTURE2D(_LayerWeightMap, sampler_LayerAlbedoMap, uv);
+      #elif _LAYERSOURCE_VERTEX
+         return vertexColor;
+      #else
+         return float4(1,1,1,1);
+      #endif
+   }
+
+   half GetWeightMaskParams(half4 mask)
+   {
+      half layerMask = 1;
+      #if _LAYERSOURCE_TEXTURE || _LAYERSOURCE_VERTEX
+         if (_LayerChannel < 0.5)
+            layerMask = mask.r;
+         else if (_LayerChannel < 1.5)
+            layerMask = mask.g;
+         else if (_LayerChannel < 2.5)
+            layerMask = mask.b;
+         else
+            layerMask = mask.a;
+      #endif
+      return layerMask;
+   }
+
+   half LayerHeightBlend(half h1, half h2, half slope, half contrast)
+   {
+      h2 = 1 - h2;
+      half tween = saturate((slope - min(h1, h2)) / max(abs(h1 - h2), 0.001)); 
+      half blend = saturate( ( tween - (1-contrast) ) / max(contrast, 0.001));
+      return blend;
+   }
+
+#endif
+
+   void SurfaceFunction(inout Surface o, ShaderData d)
+   {
+      float2 uv = d.texcoord0.xy * _LayerAlbedoMap_ST.xy + _LayerAlbedoMap_ST.zw;
+
+      if (_LayerTextureSpace)
+      {
+         uv = d.worldSpacePosition.xz * _LayerAlbedoMap_ST.xy + _LayerAlbedoMap_ST.zw;
+      }
+
+      half4 c = SAMPLE_TEXTURE2D(_LayerAlbedoMap, sampler_LayerAlbedoMap, uv) * _LayerTint;
+      half3 n = UnpackScaleNormal(SAMPLE_TEXTURE2D(_LayerNormalMap, sampler_LayerNormalMap, uv), _LayerNormalStrength);
+
+      #if _MASKMAP
+          // Unity mask map format (R) Metallic, (G) Occlusion, (B) Detail Mask (A) Smoothness
+          half4 mask = SAMPLE_TEXTURE2D(_LayerMaskMap, sampler_LayerAlbedoMap, uv);
+      #endif
+
+      half3 blendColor = c.rgb;
+
+      // slope filtered
+      half dt = dot(TangentToWorldSpace(d, o.Normal), float3(0,1,0));
+      dt -= _LayerAngleMin;
+      half blend = saturate(dt * _LayerBlendContrast * 30) * _LayerStrength;
+
+      // height filtered
+      float hf = saturate((o.Height - _LayerHeight) * _LayerBlendContrast * 30 );
+      if (_LayerInvertHeight > 0.5)
+      {
+         hf = 1.0 - hf;
+      }
+      blend *= hf;
+      
+      blend *= GetWeightMaskParams(GetWeightMask(d.texcoord0.xy, d.vertexColor));
+
+      
+
+
+      if (_LayerBlendMode > 2.5) // heightblend
+      {
+         blend = LayerHeightBlend(o.Height, c.a, blend, _LayerBlendContrast);
+         o.Height = lerp(o.Height, c.a, blend);
+         
+      }
+      else if (_LayerBlendMode > 1.5) // mult2x
+      {
+         blendColor = o.Albedo * c.rgb * 2;
+         o.Height = lerp(o.Height, o.Height * c.a * 2, blend);
+      }
+      else  // alpha
+      {
+         o.Height = lerp(o.Height, c.a, blend);
+      }
+
+      o.Albedo = lerp(o.Albedo, c.rgb, blend);
+      o.Normal = lerp(o.Normal, n, blend);
+
+      #if _MASKMAP
+         o.Metallic = lerp(o.Metallic, mask.r, blend);
+         o.Smoothness = lerp(o.Smoothness, mask.a, blend);
+         o.Occlusion = lerp(o.Occlusion, mask.g, blend);
+      #endif
+   }
+
+END_CODE
+

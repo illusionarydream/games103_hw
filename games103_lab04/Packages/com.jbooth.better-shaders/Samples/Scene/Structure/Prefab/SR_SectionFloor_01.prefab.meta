@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 891647357ef0cc044acf9aa1be7b2d40
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Prefab/SR_SectionFloor_01.prefab
+  uploadId: 470645

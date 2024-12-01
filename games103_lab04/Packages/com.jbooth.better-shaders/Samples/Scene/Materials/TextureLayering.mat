@@ -1,0 +1,122 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: TextureLayering
+  m_Shader: {fileID: -6465566751694194690, guid: d3672d627680c425aadfd944fa9e7d56,
+    type: 3}
+  m_ShaderKeywords: _LAYERMASKMAP _LAYERSOURCE_CONSTANT _MASKMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlbedoMap:
+        m_Texture: {fileID: 2800000, guid: 6b4b7964e7af94e8a94826f31abbc285, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerAlbedoMap:
+        m_Texture: {fileID: 2800000, guid: a9bf74f0437fa492da20044a70440e92, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerAlbedoMap_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerMaskMap:
+        m_Texture: {fileID: 2800000, guid: dcf0eeec12ad74a70b4c97f929d0505a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerMaskMap_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerNormalMap:
+        m_Texture: {fileID: 2800000, guid: d39e0abeebd9b4b5db71b9ef12cc624a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerNormalMap_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerWeightMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerWeightMap_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LayerWeightMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 2800000, guid: 5f242fdd973294726bba2eaf57a762b7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: b9b361eb80a8a499bbffd3c4b1ec9c36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WeightMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _DetailAlbedoStrength: 1
+    - _DetailNormalStrength: 1
+    - _DetailSmoothnessStrength: 1
+    - _DisplacementAmount: 0.612
+    - _DisplacementMipLod: 1
+    - _EmissionStrength: 1
+    - _LayerAngleMin: 0
+    - _LayerAngleMin_Ext1: 0.1
+    - _LayerBlendContrast: 0.273
+    - _LayerBlendContrast_Ext1: 0.7
+    - _LayerBlendMode: 3
+    - _LayerBlendMode_Ext1: 1
+    - _LayerChannel: 0
+    - _LayerChannel_Ext1: 0
+    - _LayerHeight: 1
+    - _LayerHeight_Ext1: 0
+    - _LayerInvertHeight: 1
+    - _LayerInvertHeight_Ext1: 0
+    - _LayerNormalStrength: 1
+    - _LayerNormalStrength_Ext1: 1
+    - _LayerSource: 0
+    - _LayerSource_Ext1: 0
+    - _LayerStrenght: 1
+    - _LayerStrength: 0.458
+    - _LayerStrength_Ext1: 1
+    - _LayerTextureSpace: 0
+    - _LayerTextureSpace_Ext1: 0
+    - _LayerUseMaskMap: 1
+    - _LayerUseMaskMap_Ext1: 0
+    - _NormalStrength: 1
+    - _TessEdgeLength: 20
+    - _TessSubDiv: 12
+    - _UseDetail: 0
+    - _UseEmission: 0
+    - _UseMaskMap: 1
+    m_Colors:
+    - _LayerTint: {r: 1, g: 1, b: 1, a: 1}
+    - _LayerTint_Ext1: {r: 1, g: 1, b: 1, a: 1}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}

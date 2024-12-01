@@ -1,0 +1,129 @@
+﻿
+BEGIN_OPTIONS
+
+END_OPTIONS
+
+BEGIN_PROPERTIES
+   [BetterHeader(Triplanar)][Space]
+   [Enum(WorldSpace, 0, LocalSpace, 1)] _TriplanarSpace ("Triplanar Space", Float) = 0
+   [NoScaleOffset]_AlbedoMap("Albedo", 2D) = "white" {}
+   _Tint ("Tint", Color) = (1, 1, 1, 1)
+   [Normal][NoScaleOffset]_NormalMap("Normal", 2D) = "bump" {}
+   _TriplanarNormalStrength("Triplanar Normal Strength", Range(0,2)) = 1
+   [Toggle(_USEMASKMAP)]
+   _UseMaskMap ("Use Mask Map", Float) = 0
+   [NoScaleOffset]_MaskMap("Mask Map", 2D) = "black" {}
+
+   _TriplanarUVScale("Triplanar UV Scale", Float) = 1
+
+   [Toggle(_USEGLOBALNORMAL)]
+   _UseGlobalNormal ("Use Global Normal", Float) = 0
+   [NoScaleOffset]_GlobalNormal("Global Normal", 2D) = "bump" {}
+   _GlobalNormalStrength("Global Normal Strength", Range(0,2)) = 1
+END_PROPERTIES
+
+
+// Any variables you want to have in the per material CBuffer go here.
+BEGIN_CBUFFER
+	half4 _Tint;
+   half _TriplanarUVScale;
+   half _TriplanarNormalStrength;
+   half _GlobalNormalStrength;
+   half _TriplanarSpace;
+END_CBUFFER
+
+
+// if you are writing a subshader, any defines that should be set on the main
+// shader are defined here
+BEGIN_DEFINES
+   #pragma shader_feature_local _ _USEMASKMAP
+   #pragma shader_feature_local _ _USEGLOBALNORMAL
+END_DEFINES
+
+
+// All code goes here
+
+BEGIN_CODE
+
+   TEXTURE2D(_AlbedoMap);
+   SAMPLER(sampler_AlbedoMap);
+   TEXTURE2D(_NormalMap);
+   SAMPLER(sampler_NormalMap);
+   TEXTURE2D(_MaskMap);
+   TEXTURE2D(_GlobalNormal);
+
+   float3 TriplanarBlendUnpackedRNM(float3 n1, float3 n2)
+   {
+       n1 += float3( 0,  0, 1);
+       n2 *= float3(-1, -1, 1);
+       return n1*dot(n1, n2)/n1.z - n2;
+   }
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+      // definitive source on triplanar:
+      // https://bgolus.medium.com/normal-mapping-for-a-triplanar-shader-10bf39dca05a#4dd6
+
+      float3 pos = d.worldSpacePosition;
+      float3 normal = d.worldSpaceNormal;
+      if (_TriplanarSpace > 0)
+      {
+         pos = d.localSpacePosition;
+         normal = d.localSpaceNormal;
+      }
+      pos *= _TriplanarUVScale;
+      float2 uvX = pos.zy; // x facing plane
+      float2 uvY = pos.xz; // y facing plane
+      float2 uvZ = pos.xy; // z facing plane
+
+      half3 absVertNormal = abs(normal);
+
+      float3 blend = normalize(absVertNormal);
+      blend /= dot(blend, (float3)1);
+
+
+      // albedo
+      half4 c = SAMPLE_TEXTURE2D(_AlbedoMap, sampler_AlbedoMap, uvX) * blend.x + 
+         SAMPLE_TEXTURE2D(_AlbedoMap, sampler_AlbedoMap, uvY) * blend.y + 
+         SAMPLE_TEXTURE2D(_AlbedoMap, sampler_AlbedoMap, uvZ) * blend.z;
+      o.Albedo = c.rgb;
+      o.Height = c.a;
+
+      #if _USEMASKMAP
+         half4 mask = SAMPLE_TEXTURE2D(_MaskMap, sampler_AlbedoMap, uvX) * blend.x + 
+            SAMPLE_TEXTURE2D(_MaskMap, sampler_AlbedoMap, uvY) * blend.y + 
+            SAMPLE_TEXTURE2D(_MaskMap, sampler_AlbedoMap, uvZ) * blend.z;
+         o.Metallic = mask.r;
+         o.Occlusion = mask.g;
+         o.Smoothness = mask.a;
+      #endif
+
+
+      // Tangent space normal maps
+      half3 tnormalX = UnpackScaleNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, uvX), _TriplanarNormalStrength);
+      half3 tnormalY = UnpackScaleNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, uvY), _TriplanarNormalStrength);
+      half3 tnormalZ = UnpackScaleNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, uvZ), _TriplanarNormalStrength);
+
+      // Swizzle world normals to match tangent space and apply RNM blend
+      tnormalX = TriplanarBlendUnpackedRNM(half3(normal.zy, absVertNormal.x), tnormalX);
+      tnormalY = TriplanarBlendUnpackedRNM(half3(normal.xz, absVertNormal.y), tnormalY);
+      tnormalZ = TriplanarBlendUnpackedRNM(half3(normal.xy, absVertNormal.z), tnormalZ);
+      // Get the sign (-1 or 1) of the surface normal
+      half3 axisSign = sign(normal);
+      // Reapply sign to Z
+      tnormalX.z *= axisSign.x;
+      tnormalY.z *= axisSign.y;
+      tnormalZ.z *= axisSign.z;
+      // Triblend normals and add to world normal
+      half3 worldNormal = normalize(tnormalX.zyx * blend.x + tnormalY.xzy * blend.y + tnormalZ.xyz * blend.z);
+      o.Normal = WorldToTangentSpace(d, worldNormal);
+
+      #if _USEGLOBALNORMAL
+         half3 globalNormal = UnpackScaleNormal(SAMPLE_TEXTURE2D(_GlobalNormal, sampler_NormalMap, d.texcoord0.xy), _GlobalNormalStrength);
+         o.Normal = TriplanarBlendUnpackedRNM(globalNormal, o.Normal);
+      #endif
+
+	}
+
+END_CODE
+

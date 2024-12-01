@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 92e859c764174cf4385acf2f713357cc
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Scene/Structure/Prefab/TR_Pillar_01.prefab
+  uploadId: 470645

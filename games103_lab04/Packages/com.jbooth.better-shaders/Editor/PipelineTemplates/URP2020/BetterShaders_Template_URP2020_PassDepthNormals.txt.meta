@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c03e99b98ac274a8b8c1f31b5e04d2dc
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/URP2020/BetterShaders_Template_URP2020_PassDepthNormals.txt
+  uploadId: 470645

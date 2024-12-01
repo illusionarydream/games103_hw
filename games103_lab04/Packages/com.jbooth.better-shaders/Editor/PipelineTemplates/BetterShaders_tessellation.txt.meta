@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c8d0746284e5342bb82c6ac2d334e846
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/BetterShaders_tessellation.txt
+  uploadId: 470645

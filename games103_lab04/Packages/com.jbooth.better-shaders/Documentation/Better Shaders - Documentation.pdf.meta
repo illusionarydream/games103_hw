@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3e890df71fd0745078320406f7a85a99
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Documentation/Better Shaders - Documentation.pdf
+  uploadId: 470645

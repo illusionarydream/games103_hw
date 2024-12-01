@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 1e85cddf5bab5400d9c0e5ad6f442d3e
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/HDRP2019/BetterShaders_Template_HDRP2019_PassGBuffer.txt
+  uploadId: 470645

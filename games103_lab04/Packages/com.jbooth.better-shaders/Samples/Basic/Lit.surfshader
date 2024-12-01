@@ -1,0 +1,115 @@
+﻿// An example of the stadard/lit shader style of mega shader
+
+
+BEGIN_OPTIONS
+   Stackable "False"
+END_OPTIONS
+
+// Put any properties you have between the begin/end property blocks
+BEGIN_PROPERTIES
+   [BetterHeader(Lit)]
+   _AlbedoMap("Albedo/Height", 2D) = "white" {}
+	_Tint ("Tint", Color) = (1, 1, 1, 1)
+   
+   [Normal][NoScaleOffset]_NormalMap("Normal", 2D) = "bump" {}
+   _NormalStrength("Normal Strength", Range(0,2)) = 1
+
+   [Toggle(_MASKMAP)] _UseMaskMap ("Use Mask Map", Float) = 0
+   [ShowIfDrawer(_UseMaskMap)] [NoScaleOffset]_MaskMap("Mask Map", 2D) = "black" {}
+
+   [Toggle(_EMISSION)] _UseEmission ("Use Emission Map", Float) = 0
+   [ShowIfDrawer(_UseEmission)][NoScaleOffset]_EmissionMap("Emission Map", 2D) = "black" {}
+   [ShowIfDrawer(_UseEmission)]_EmissionStrength("Emission Strength", Range(0, 4)) = 1
+
+   [Toggle(_DETAIL)] _UseDetail("Use Detail Map", Float) = 0
+   [ShowIfDrawer(_UseDetail)] _DetailMap("Detail Map", 2D) = "bump" {}
+   [ShowIfDrawer(_UseDetail)] _DetailAlbedoStrength("Detail Albedo Strength", Range(0, 2)) = 1
+   [ShowIfDrawer(_UseDetail)] _DetailNormalStrength("Detail Normal Strength", Range(0, 2)) = 1
+   [ShowIfDrawer(_UseDetail)] _DetailSmoothnessStrength("Detail Smoothness Strength", Range(0, 2)) = 1
+
+END_PROPERTIES
+
+
+// Any variables you want to have in the per material CBuffer go here.
+BEGIN_CBUFFER
+   half4 _Tint;
+   float4 _AlbedoMap_ST;
+   float4 _DetailMap_ST;
+   half _NormalStrength;
+   half _EmissionStrength;
+   half _DetailAlbedoStrength;
+   half _DetailNormalStrength;
+   half _DetailSmoothnessStrength;
+END_CBUFFER
+
+
+
+BEGIN_DEFINES
+   #pragma shader_feature_local _ _MASKMAP
+   #pragma shader_feature_local _ _DETAIL
+   #pragma shader_feature_local _ _EMISSION
+END_DEFINES
+
+
+// All code goes here
+
+BEGIN_CODE
+
+   half3 LitBlendDetailNormal(half3 n1, half3 n2)
+   {
+      return normalize(half3(n1.xy + n2.xy, n1.z*n2.z));
+   }
+
+   // We share samplers with the albedo - which free's up more for stacking.
+   // Note that you can use surface shader style texture/sampler declarations here as well.
+   // They have been emulated in HDRP/URP, however, I think using these is nicer than the
+   // old surface shader methods.
+
+   TEXTURE2D(_AlbedoMap);
+   SAMPLER(sampler_AlbedoMap);   // naming this way associates it with the sampler properties from the albedo map
+   TEXTURE2D(_NormalMap);
+   SAMPLER(sampler_NormalMap); 
+   TEXTURE2D(_MaskMap);
+   TEXTURE2D(_EmissionMap);
+   TEXTURE2D(_DetailMap);
+
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+      float2 uv = d.texcoord0.xy * _AlbedoMap_ST.xy + _AlbedoMap_ST.zw;
+
+      half4 c = SAMPLE_TEXTURE2D(_AlbedoMap, sampler_AlbedoMap, uv);
+      o.Albedo = c.rgb * _Tint.rgb;
+      o.Height = c.a;
+      o.Normal = UnpackScaleNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, uv), _NormalStrength);
+
+      half detailMask = 1; 
+      #if _MASKMAP
+          // Unity mask map format (R) Metallic, (G) Occlusion, (B) Detail Mask (A) Smoothness
+         half4 mask = SAMPLE_TEXTURE2D(_MaskMap, sampler_AlbedoMap, uv);
+         o.Metallic = mask.r;
+         o.Occlusion = mask.g;
+         o.Smoothness = mask.a;
+         detailMask = mask.b;
+      #endif // separate maps
+
+
+      half3 emission = 0;
+      #if defined(_EMISSION)
+         o.Emission = SAMPLE_TEXTURE2D(_EmissionMap, sampler_AlbedoMap, uv).rgb * _EmissionStrength;
+      #endif
+
+      #if defined(_DETAIL)
+         float2 detailUV = uv * _DetailMap_ST.xy + _DetailMap_ST.zw;
+         half4 detailSample = SAMPLE_TEXTURE2D(_DetailMap, sampler_AlbedoMap, detailUV);
+         o.Normal = LitBlendDetailNormal(o.Normal, UnpackScaleNormal(detailSample, _DetailNormalStrength * detailMask));
+         o.Albedo = lerp(o.Albedo, o.Albedo * 2 * detailSample.x,  detailMask * _DetailAlbedoStrength);
+         o.Smoothness = lerp(o.Smoothness, o.Smoothness * 2 * detailSample.z, detailMask * _DetailSmoothnessStrength);
+      #endif
+
+
+		o.Alpha = c.a;
+	}
+
+END_CODE
+

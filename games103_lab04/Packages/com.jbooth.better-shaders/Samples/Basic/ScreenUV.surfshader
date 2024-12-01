@@ -1,0 +1,24 @@
+﻿
+BEGIN_OPTIONS
+
+END_OPTIONS
+
+BEGIN_PROPERTIES
+	_Albedo("Albedo", 2D) = "white" {}
+END_PROPERTIES
+
+BEGIN_CBUFFER
+	
+END_CBUFFER
+
+
+BEGIN_CODE
+
+	sampler2D _Albedo;
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		o.Albedo = tex2D(_Albedo, d.screenUV).rgb;
+	}
+
+END_CODE
+

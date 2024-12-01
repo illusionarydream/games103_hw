@@ -15,3 +15,9 @@
 - Note: The problem of numerical dissipation occurs when solving FVM
   - Regularization the Dm matrix.
   - Laplacian smoothing
+
+#### Fluid Simulation
+
+-  Height field
+- Navier-Stokes formula
+- SPH

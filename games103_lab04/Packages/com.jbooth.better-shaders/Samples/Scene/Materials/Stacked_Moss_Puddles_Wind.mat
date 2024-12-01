@@ -1,0 +1,255 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Stacked_Moss_Puddles_Wind
+  m_Shader: {fileID: -6465566751694194690, guid: 93e6722f63edc44ef846ffd1209735de,
+    type: 3}
+  m_ShaderKeywords: MOSS_ON PUDDLE_ON UVSHEAR_ON WIND_ON _MASKMAP _MOSSMASKMAP _PUDDLECHANNEL_R
+    _PUDDLESOURCE_CONSTANT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlbedoMap:
+        m_Texture: {fileID: 2800000, guid: 6b4b7964e7af94e8a94826f31abbc285, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskMap:
+        m_Texture: {fileID: 2800000, guid: f540ae8b6733d4019b18438b53c5329f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MossAlbedo:
+        m_Texture: {fileID: 2800000, guid: 1052be0ee31184f62b8f4cb9711b2d01, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _MossAlbedo_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MossMask:
+        m_Texture: {fileID: 2800000, guid: 5f242fdd973294726bba2eaf57a762b7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MossMask_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MossNormal:
+        m_Texture: {fileID: 2800000, guid: 8bb0fcfb2f5bd45cf96500f577919bbe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MossNormal_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: b9b361eb80a8a499bbffd3c4b1ec9c36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PuddleMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindParticulate:
+        m_Texture: {fileID: 2800000, guid: 1f42b86d4e9d04f3881fa1461f364fd6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindParticulate1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindParticulate10:
+        m_Texture: {fileID: 2800000, guid: 1f42b86d4e9d04f3881fa1461f364fd6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindParticulate8:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindParticulate_Ext1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WindParticulate_Ext_1:
+        m_Texture: {fileID: 2800000, guid: 9b492051541d14c15b479ae7ecd573cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaCutoffEnable: 0
+    - _CullMode: 2
+    - _CullModeForward: 2
+    - _DebugChannel: 0
+    - _DetailAlbedoStrength: 1
+    - _DetailNormalStrength: 1
+    - _DetailSmoothnessStrength: 1
+    - _DisplacementAmount: 1.05
+    - _DisplacementMipLod: 1
+    - _DoubleSidedEnable: 0
+    - _DoubleSidedNormalMode: 2
+    - _EmissionStrength: 1.16
+    - _InvertHeight: 0
+    - _InvertHeight_Ext1: 0
+    - _MossAmount: 0.079
+    - _MossAmount_Ext1: 0.651
+    - _MossAngleMin: 0.1
+    - _MossAngleMin_Ext1: 0.914
+    - _MossFalloff: 8.6
+    - _MossFalloff_Ext1: 8
+    - _MossHeight: 0.345
+    - _MossHeight_Ext1: 0
+    - _MossInvertHeight: 0
+    - _MossInvertHeight_Ext1: 0
+    - _MossTextureSpace: 0
+    - _MossTextureSpace_Ext1: 0
+    - _MossToggle: 1
+    - _NormalStrength: 1
+    - _PuddleAmount: 0.21
+    - _PuddleChannel: 0
+    - _PuddleFalloff: 8
+    - _PuddleSource: 0
+    - _PuddleToggle: 1
+    - _ReceivesSSR: 1
+    - _RequireSplitLighting: 0
+    - _ShearStage: 1
+    - _ShearStage_Ext_1: 0
+    - _ShearStrength: 6.6
+    - _ShearStrength_Ext_1: -1.16
+    - _StencilRef: 0
+    - _StencilRefDepth: 0
+    - _StencilRefDistortionVec: 64
+    - _StencilRefGBuffer: 2
+    - _StencilRefMV: 128
+    - _StencilWriteMask: 3
+    - _StencilWriteMaskDepth: 32
+    - _StencilWriteMaskDistortionVec: 64
+    - _StencilWriteMaskGBuffer: 3
+    - _StencilWriteMaskMV: 128
+    - _Strength: -0.17
+    - _SurfaceType: 0
+    - _TessEdgeLength: 20
+    - _TessSubDiv: 12
+    - _TransparentBackfaceEnable: 0
+    - _TransparentCullMode: 2
+    - _TransparentSortPriority: 0
+    - _UVShear: 1
+    - _UseDetail: 0
+    - _UseEmission: 0
+    - _UseGlobalPuddles: 0
+    - _UseMaskMap: 1
+    - _UseMossMaskMap: 1
+    - _UseMossMaskMap_Ext1: 0
+    - _UseShadowThreshold: 0
+    - _Wind: 1
+    - _WindParticularSpace: 1
+    - _WindParticularSpace1: 0
+    - _WindParticularSpace10: 0
+    - _WindParticularSpace8: 0
+    - _WindParticularSpace_Ext1: 0
+    - _WindParticularSpace_Ext_1: 0
+    - _WindParticulate10OcclusionStrength10: 1
+    - _WindParticulate10Power10: 1
+    - _WindParticulate10Rotation10: 0
+    - _WindParticulate10Speed10: 1
+    - _WindParticulate10Strength10: 1.98
+    - _WindParticulate10TextureHeight10: 1
+    - _WindParticulate1OcclusionStrength1: 1
+    - _WindParticulate1Power1: 1
+    - _WindParticulate1Rotation1: 0
+    - _WindParticulate1Speed1: 1
+    - _WindParticulate1Strength1: 1
+    - _WindParticulate1TextureHeight1: 1
+    - _WindParticulate8OcclusionStrength8: 1
+    - _WindParticulate8Power8: 1
+    - _WindParticulate8Rotation8: 0
+    - _WindParticulate8Speed8: 1
+    - _WindParticulate8Strength8: 1
+    - _WindParticulate8TextureHeight8: 1
+    - _WindParticulateOcclusionStrength: 1
+    - _WindParticulateOcclusionStrength_Ext_1: 1
+    - _WindParticulatePower: 1
+    - _WindParticulatePower_Ext_1: 1
+    - _WindParticulateRotation: 0
+    - _WindParticulateRotation_Ext_1: 0
+    - _WindParticulateSpeed: 1
+    - _WindParticulateSpeed_Ext_1: 1
+    - _WindParticulateStrength: 1.72
+    - _WindParticulateStrength_Ext_1: 2.319
+    - _WindParticulateStretch: 0.3
+    - _WindParticulateTextureHeight: 0.287
+    - _WindParticulateTextureHeight_Ext_1: 1
+    - _WindParticulate_Ext1OcclusionStrength_Ext1: 1
+    - _WindParticulate_Ext1Power_Ext1: 1
+    - _WindParticulate_Ext1Rotation_Ext1: 0
+    - _WindParticulate_Ext1Speed_Ext1: 1
+    - _WindParticulate_Ext1Strength_Ext1: 1
+    - _WindParticulate_Ext1TextureHeight_Ext1: 1
+    - _Wind_On: 1
+    - _ZTestDepthEqualForOpaque: 4
+    - _ZTestGBuffer: 4
+    - _ZTestTransparent: 4
+    - _ZWrite: 0
+    m_Colors:
+    - _Center: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _CenterOffset: {r: 0.5, g: 0.5, b: 4.32, a: -1.14}
+    - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
+    - _PuddleColor: {r: 0.18859024, g: 0.24123351, b: 0.24528301, a: 1}
+    - _ShearCenterOffset: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _ShearCenterOffset_Ext_1: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulate10AngleMask10: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate10Color10: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulate10Emissive10: {r: 0, g: 0, b: 0, a: 0}
+    - _WindParticulate10UVScale10: {r: 1, g: 0.27, b: 0, a: 0}
+    - _WindParticulate10UpMask10: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate10WorldHeightMask10: {r: -99999, g: -99999, b: 99999, a: 99999}
+    - _WindParticulate1AngleMask1: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate1Color1: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulate1Emissive1: {r: 0, g: 0, b: 0, a: 0}
+    - _WindParticulate1UVScale1: {r: 1, g: 0.25, b: 0, a: 0}
+    - _WindParticulate1UpMask1: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate1WorldHeightMask1: {r: -99999, g: -99999, b: 99999, a: 99999}
+    - _WindParticulate8AngleMask8: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate8Color8: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulate8Emissive8: {r: 0, g: 0, b: 0, a: 0}
+    - _WindParticulate8UVScale8: {r: 1, g: 0.25, b: 0, a: 0}
+    - _WindParticulate8UpMask8: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate8WorldHeightMask8: {r: -99999, g: -99999, b: 99999, a: 99999}
+    - _WindParticulateAngleMask: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulateAngleMask_Ext_1: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulateColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulateColor_Ext_1: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulateEmissive: {r: 0.4056604, g: 0.36930403, b: 0.36930403, a: 1}
+    - _WindParticulateEmissive_Ext_1: {r: 0, g: 0, b: 0, a: 0}
+    - _WindParticulateHeightMask: {r: -99999, g: -99999, b: 99999, a: 99999}
+    - _WindParticulateUVScale: {r: 0.2, g: 0.2, b: 0, a: 0}
+    - _WindParticulateUVScale_Ext_1: {r: 1, g: 0.25, b: 0, a: 0}
+    - _WindParticulateUpMask: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulateUpMask_Ext_1: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulateWorldHeightMask: {r: -99999, g: -99999, b: 99999, a: 99999}
+    - _WindParticulateWorldHeightMask_Ext_1: {r: -99999, g: -99999, b: 99999, a: 99999}
+    - _WindParticulate_Ext1AngleMask_Ext1: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate_Ext1Color_Ext1: {r: 1, g: 1, b: 1, a: 1}
+    - _WindParticulate_Ext1Emissive_Ext1: {r: 0, g: 0, b: 0, a: 0}
+    - _WindParticulate_Ext1UVScale_Ext1: {r: 1, g: 0.25, b: 0, a: 0}
+    - _WindParticulate_Ext1UpMask_Ext1: {r: -1, g: -1, b: 1, a: 1}
+    - _WindParticulate_Ext1WorldHeightMask_Ext1: {r: -99999, g: -99999, b: 99999,
+        a: 99999}

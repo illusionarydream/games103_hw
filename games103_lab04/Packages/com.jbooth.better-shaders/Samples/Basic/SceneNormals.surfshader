@@ -1,0 +1,17 @@
+﻿
+BEGIN_OPTIONS
+	Alpha "Blend"
+    Workflow "Unlit"
+END_OPTIONS
+
+
+BEGIN_CODE
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+		o.Albedo = GetSceneNormal(d.screenUV, d.worldSpaceViewDir);
+
+	}
+
+END_CODE
+

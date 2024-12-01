@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e64e6baebc0544be38c4073df2df9e08
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Samples/Editor/CustomMaterialEditors/TextureLayerMaterialEditor.cs
+  uploadId: 470645

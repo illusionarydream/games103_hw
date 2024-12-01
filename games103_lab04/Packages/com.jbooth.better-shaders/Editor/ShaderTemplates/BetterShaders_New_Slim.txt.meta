@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3edc7e85fd69248d885ba77c2b6e7a0f
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/ShaderTemplates/BetterShaders_New_Slim.txt
+  uploadId: 470645

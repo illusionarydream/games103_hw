@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 33bc911f797144a28afd4583e7717aa0
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/Standard/BetterShaders_Template_Standard_CommonHLSL.txt
+  uploadId: 470645

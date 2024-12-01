@@ -1,0 +1,33 @@
+﻿// Would need a more complete implimentation for each platform, but demonstrates a simple lighting model
+// via an unlit shader. To complete, you'd want to handle GI, SH lighting, etc, and impliment HDRP
+// with a component on the main light. 
+
+BEGIN_OPTIONS
+	Workflow "Unlit"
+END_OPTIONS
+
+BEGIN_PROPERTIES
+	_HalfLambertStrength ("Lambert(0), HalfLambert(1)", Range(0,1)) = 1
+END_PROPERTIES
+
+BEGIN_CBUFFER
+   half _HalfLambertStrength;
+END_CBUFFER
+
+BEGIN_CODE
+
+	void SurfaceFunction(inout Surface o, ShaderData d)
+	{
+			float3 lightDir;
+            float3 lightColor;
+			GetSun(lightDir, lightColor);
+			float3 normalDirection = TangentToWorldSpace(d, o.Normal);
+			float atten = 1.0;
+			float lambert = dot(normalDirection, lightDir);
+
+            lambert = lerp(lambert, lambert * 0.5 + 0.5, _HalfLambertStrength);
+			o.Albedo *= atten * lightColor * lambert;
+	}
+
+END_CODE
+

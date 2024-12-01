@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f01be4a9d743347abbf009548865d0e0
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187838
+  packageName: Better Shaders - Standard/URP/HDRP
+  packageVersion: 1.9.18
+  assetPath: Packages/com.jbooth.better-shaders/Editor/PipelineTemplates/HDRP2019/BetterShaders_Template_HDRP2019_PassForward.txt
+  uploadId: 470645
